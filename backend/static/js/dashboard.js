@@ -90,11 +90,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     user: localStorage.getItem('user')
                 });
                 
-                // 3 saniye bekle ki console'u okuyabilsin
-                alert('Giriş yapmanız gerekiyor. 3 saniye sonra ana sayfaya yönlendirileceksiniz.');
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 3000);
+                // YÖNLENDİRMEYİ KALDIR - SADECE MESAJ GÖSTER
+                const container = document.querySelector('.container');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="padding: 2rem; text-align: center;">
+                            <h1 style="color: red;">❌ Giriş Gerekli</h1>
+                            <p>Token veya kullanıcı bilgisi bulunamadı.</p>
+                            <p>Lütfen console'u kontrol edin (F12) ve login sayfasına gidin.</p>
+                            <button onclick="window.location.href='/'" style="padding: 1rem 2rem; font-size: 1.2rem; margin-top: 1rem; cursor: pointer;">
+                                Login Sayfasına Git
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                // YÖNLENDİRME YOK - KULLANICI MANUEL GİTSİN
                 return;
             }
             

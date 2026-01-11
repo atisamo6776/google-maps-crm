@@ -66,7 +66,10 @@ async function apiCall(endpoint, options = {}) {
         if (response.status === 401) {
             // Unauthorized - logout
             console.error('401 Unauthorized - Token geçersiz veya eksik');
-            handleLogout();
+            console.error('Response status:', response.status);
+            console.error('Response headers:', response.headers);
+            // YÖNLENDİRMEYİ KALDIR - SADECE LOG
+            // handleLogout();
             return null;
         }
         
