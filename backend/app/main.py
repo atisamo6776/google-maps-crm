@@ -7,7 +7,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from app.models.database import init_db
-from app.routes import auth, dashboard, search, companies, admin, excel, config, theme
+from app.routes import auth, dashboard, search, companies, admin, excel, theme
+from app.routes.config import router as config_router
 import os
 import logging
 
@@ -53,7 +54,7 @@ app.include_router(search.router)
 app.include_router(companies.router)
 app.include_router(admin.router)
 app.include_router(excel.router)
-app.include_router(config.router)
+app.include_router(config_router)
 app.include_router(theme.router)
 
 
