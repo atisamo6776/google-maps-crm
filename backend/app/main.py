@@ -47,30 +47,38 @@ async def health():
 
 
 # Frontend static files ve templates
-frontend_path = os.path.join(os.path.dirname(__file__), "../../frontend")
-if os.path.exists(frontend_path):
-    app.mount("/static", StaticFiles(directory=os.path.join(frontend_path, "static")), name="static")
-    templates = Jinja2Templates(directory=os.path.join(frontend_path, "templates"))
-    
-    @app.get("/", response_class=HTMLResponse)
-    async def index(request: Request):
-        return templates.TemplateResponse("index.html", {"request": request})
-    
-    @app.get("/dashboard", response_class=HTMLResponse)
-    async def dashboard_page(request: Request):
-        return templates.TemplateResponse("dashboard.html", {"request": request})
-    
-    @app.get("/search", response_class=HTMLResponse)
-    async def search_page(request: Request):
-        return templates.TemplateResponse("search.html", {"request": request})
-    
-    @app.get("/companies", response_class=HTMLResponse)
-    async def companies_page(request: Request):
-        return templates.TemplateResponse("companies.html", {"request": request})
-    
-    @app.get("/admin", response_class=HTMLResponse)
-    async def admin_page(request: Request):
-        return templates.TemplateResponse("admin.html", {"request": request})
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = backend/
+
+# Static ve templates
+app.mount(
+    "/static",
+    StaticFiles(directory=os.path.join(BASE_DIR, "static")),
+    name="static"
+)
+
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard_page(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.get("/search", response_class=HTMLResponse)
+async def search_page(request: Request):
+    return templates.TemplateResponse("search.html", {"request": request})
+
+@app.get("/companies", response_class=HTMLResponse)
+async def companies_page(request: Request):
+    return templates.TemplateResponse("companies.html", {"request": request})
+
+@app.get("/admin", response_class=HTMLResponse)
+async def admin_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})
+
 
 
 if __name__ == "__main__":
