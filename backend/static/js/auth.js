@@ -49,8 +49,10 @@ async function handleLogin() {
         }
         
         // Token ve kullanıcı bilgisini kaydet
+        console.log('Login - Token kaydediliyor:', data.access_token ? 'Token var (' + data.access_token.length + ' karakter)' : 'Token yok');
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('Login - Token kaydedildi, localStorage kontrol:', localStorage.getItem('token') ? 'OK' : 'HATA');
         
         // Dashboard'a yönlendir
         window.location.href = '/dashboard';
@@ -97,8 +99,10 @@ async function handleRegister() {
         }
         
         // Token ve kullanıcı bilgisini kaydet
+        console.log('Register - Token kaydediliyor:', data.access_token ? 'Token var (' + data.access_token.length + ' karakter)' : 'Token yok');
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('Register - Token kaydedildi, localStorage kontrol:', localStorage.getItem('token') ? 'OK' : 'HATA');
         
         // Dashboard'a yönlendir
         window.location.href = '/dashboard';

@@ -32,6 +32,13 @@ function removeUser() {
 async function apiCall(endpoint, options = {}) {
     const token = getToken();
     
+    // Debug: Token kontrolü
+    if (!token) {
+        console.warn('Token bulunamadı! localStorage:', localStorage.getItem('token'));
+    } else {
+        console.log('Token bulundu, uzunluk:', token.length);
+    }
+    
     // Headers oluştur
     const headers = {
         ...options.headers
@@ -45,6 +52,9 @@ async function apiCall(endpoint, options = {}) {
     // Token varsa Authorization header ekle
     if (token) {
         headers['Authorization'] = `Bearer ${token}`;
+        console.log('Authorization header eklendi');
+    } else {
+        console.warn('Token yok, Authorization header eklenmedi!');
     }
     
     try {
@@ -126,6 +136,12 @@ function setTheme(theme) {
 
 // Sayfa yüklendiğinde temayı ayarla
 document.addEventListener('DOMContentLoaded', () => {
+    // Debug: Token kontrolü
+    const token = getToken();
+    const user = getUser();
+    console.log('Sayfa yüklendi - Token:', token ? 'Var (' + token.length + ' karakter)' : 'YOK');
+    console.log('Sayfa yüklendi - User:', user ? user.username : 'YOK');
+    
     const theme = getTheme();
     setTheme(theme);
     
