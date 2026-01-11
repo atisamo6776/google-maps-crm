@@ -64,12 +64,13 @@ async function apiCall(endpoint, options = {}) {
         });
         
         if (response.status === 401) {
-            // Unauthorized - logout
-            console.error('401 Unauthorized - Token geçersiz veya eksik');
+            // Unauthorized - SADECE LOG, YÖNLENDİRME YOK
+            console.error('❌ 401 Unauthorized - Token geçersiz veya eksik');
             console.error('Response status:', response.status);
-            console.error('Response headers:', response.headers);
-            // YÖNLENDİRMEYİ KALDIR - SADECE LOG
-            // handleLogout();
+            console.error('Response URL:', response.url);
+            console.error('Request endpoint:', endpoint);
+            console.error('Token var mı:', token ? 'EVET (' + token.length + ' karakter)' : 'HAYIR');
+            // YÖNLENDİRMEYİ TAMAMEN KALDIR
             return null;
         }
         
@@ -93,11 +94,13 @@ async function apiCall(endpoint, options = {}) {
     }
 }
 
-// Logout
+// Logout - YÖNLENDİRME KALDIRILDI (DEBUG İÇİN)
 function handleLogout() {
+    console.log('⚠️ handleLogout çağrıldı - YÖNLENDİRME YOK (DEBUG)');
     removeToken();
     removeUser();
-    window.location.href = '/';
+    console.log('Token ve user silindi, ama yönlendirme yapılmadı');
+    // window.location.href = '/'; // YÖNLENDİRME KALDIRILDI
 }
 
 // Tema yönetimi
