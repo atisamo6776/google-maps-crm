@@ -62,20 +62,55 @@ async function loadDashboard() {
 
 // Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
-    // Kullanıcı ve token kontrolü
-    const user = getUser();
-    const token = getToken();
+    // Kullanıcı ve token kontrolü - birkaç kez dene
+    let user = getUser();
+    let token = getToken();
     
-    console.log('Dashboard yüklendi - User:', user ? user.username : 'YOK');
-    console.log('Dashboard yüklendi - Token:', token ? 'Var (' + token.length + ' karakter)' : 'YOK');
+    console.log('=== DASHBOARD YÜKLENDİ ===');
+    console.log('İlk kontrol - User:', user ? user.username : 'YOK');
+    console.log('İlk kontrol - Token:', token ? 'Var (' + token.length + ' karakter)' : 'YOK');
+    console.log('localStorage token:', localStorage.getItem('token'));
+    console.log('localStorage user:', localStorage.getItem('user'));
     
+    // Eğer ilk kontrolde yoksa, biraz bekle ve tekrar kontrol et
     if (!user || !token) {
-        console.error('Kullanıcı veya token bulunamadı, ana sayfaya yönlendiriliyor');
-        console.log('User:', user);
-        console.log('Token:', token);
-        window.location.href = '/';
-        return;
+        console.warn('İlk kontrolde bulunamadı, 500ms bekleniyor...');
+        setTimeout(() => {
+            user = getUser();
+            token = getToken();
+            console.log('İkinci kontrol - User:', user ? user.username : 'YOK');
+            console.log('İkinci kontrol - Token:', token ? 'Var (' + token.length + ' karakter)' : 'YOK');
+            
+            if (!user || !token) {
+                console.error('❌ Kullanıcı veya token bulunamadı!');
+                console.error('User objesi:', user);
+                console.error('Token:', token);
+                console.error('localStorage içeriği:', {
+                    token: localStorage.getItem('token'),
+                    user: localStorage.getItem('user')
+                });
+                
+                // 3 saniye bekle ki console'u okuyabilsin
+                alert('Giriş yapmanız gerekiyor. 3 saniye sonra ana sayfaya yönlendirileceksiniz.');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000);
+                return;
+            }
+            
+            // Bulundu, devam et
+            initializeDashboard(user, token);
+        }, 500);
+    } else {
+        // Bulundu, devam et
+        initializeDashboard(user, token);
     }
+});
+
+function initializeDashboard(user, token) {
+    console.log('✅ Dashboard başlatılıyor...');
+    console.log('Kullanıcı:', user.username);
+    console.log('Token uzunluğu:', token.length);
     
     // Navbar'ı güncelle
     const navUser = document.getElementById('nav-user');
@@ -87,4 +122,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Her 30 saniyede bir güncelle
     setInterval(loadDashboard, 30000);
-});
+}

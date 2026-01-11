@@ -73,11 +73,21 @@ async function handleLogin() {
             return;
         }
         
-        // Kısa bir bekleme sonra dashboard'a yönlendir (localStorage'ın yazılması için)
+        // Kontrol et ve dashboard'a yönlendir
         setTimeout(() => {
-            console.log('Dashboard\'a yönlendiriliyor...');
-            window.location.href = '/dashboard';
-        }, 100);
+            const finalCheck = localStorage.getItem('token');
+            const finalUser = localStorage.getItem('user');
+            console.log('Login - Final kontrol - Token:', finalCheck ? 'OK' : 'HATA');
+            console.log('Login - Final kontrol - User:', finalUser ? 'OK' : 'HATA');
+            
+            if (finalCheck && finalUser) {
+                console.log('✅ Login başarılı, Dashboard\'a yönlendiriliyor...');
+                window.location.href = '/dashboard';
+            } else {
+                console.error('❌ Login - Token veya user kaydedilemedi!');
+                errorDiv.textContent = 'Veri kaydedilemedi, lütfen sayfayı yenileyin ve tekrar deneyin';
+            }
+        }, 200);
     } catch (error) {
         errorDiv.textContent = error.message;
     }
@@ -145,11 +155,21 @@ async function handleRegister() {
             return;
         }
         
-        // Kısa bir bekleme sonra dashboard'a yönlendir (localStorage'ın yazılması için)
+        // Kontrol et ve dashboard'a yönlendir
         setTimeout(() => {
-            console.log('Dashboard\'a yönlendiriliyor...');
-            window.location.href = '/dashboard';
-        }, 100);
+            const finalCheck = localStorage.getItem('token');
+            const finalUser = localStorage.getItem('user');
+            console.log('Register - Final kontrol - Token:', finalCheck ? 'OK' : 'HATA');
+            console.log('Register - Final kontrol - User:', finalUser ? 'OK' : 'HATA');
+            
+            if (finalCheck && finalUser) {
+                console.log('✅ Register başarılı, Dashboard\'a yönlendiriliyor...');
+                window.location.href = '/dashboard';
+            } else {
+                console.error('❌ Register - Token veya user kaydedilemedi!');
+                errorDiv.textContent = 'Veri kaydedilemedi, lütfen sayfayı yenileyin ve tekrar deneyin';
+            }
+        }, 200);
     } catch (error) {
         errorDiv.textContent = error.message;
     }
