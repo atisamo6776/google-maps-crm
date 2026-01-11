@@ -9,9 +9,26 @@ from fastapi.templating import Jinja2Templates
 from app.models.database import init_db
 from app.routes import auth, dashboard, search, companies, admin, excel, config, theme
 import os
+import logging
+
+# Logging ayarla
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Veritabanını başlat
 init_db()
+
+# Config kontrolü
+import app.config as config
+logger.info("=" * 50)
+logger.info("🔐 CONFIG KONTROLÜ")
+logger.info(f"SECRET_KEY ayarlandı mı: {bool(config.SECRET_KEY)}")
+logger.info(f"SECRET_KEY uzunluk: {len(config.SECRET_KEY) if config.SECRET_KEY else 0}")
+if config.SECRET_KEY:
+    logger.info(f"SECRET_KEY başlangıcı: {config.SECRET_KEY[:10]}...")
+else:
+    logger.error("❌ SECRET_KEY YOK! Railway'de environment variable ekleyin!")
+logger.info("=" * 50)
 
 # FastAPI app oluştur
 app = FastAPI(
