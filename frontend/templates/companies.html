@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmalar - Google Maps CRM</title>
+    <link rel="stylesheet" href="/static/css/light.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <style>
+        .companies-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 350px;
+            gap: 20px;
+        }
+        .filters-panel {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
+        .companies-list {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .detail-panel {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--bg-hover);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        th:hover {
+            background: var(--border-color);
+        }
+        tr:hover {
+            background: var(--bg-hover);
+        }
+        .company-row {
+            cursor: pointer;
+        }
+        .company-row.selected {
+            background: var(--primary-color);
+            color: white;
+        }
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="companies-page">
+    <nav class="navbar">
+        <div class="nav-brand">Google Maps CRM</div>
+        <div class="nav-menu">
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/search" class="nav-link">Arama</a>
+            <a href="/companies" class="nav-link active">Firmalar</a>
+            <span id="admin-link" style="display: none;">
+                <a href="/admin" class="nav-link">Admin</a>
+            </span>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+            <span class="nav-user" id="nav-user"></span>
+            <button onclick="handleLogout()" class="btn-logout">Çıkış</button>
+        </div>
+    </nav>
+    
+    <div class="companies-container">
+        <div class="filters-panel">
+            <h3>Liste Filtreleri</h3>
+            <div class="form-group">
+                <label>Şehir</label>
+                <select id="filter-sehir">
+                    <option value="Hepsi">Hepsi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>İlçe</label>
+                <select id="filter-ilce">
+                    <option value="Hepsi">Hepsi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Aşama</label>
+                <select id="filter-asama">
+                    <option value="Hepsi">Hepsi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Telefon</label>
+                <select id="filter-telefon">
+                    <option value="hepsi">Hepsi</option>
+                    <option value="var">Telefonu Olanlar</option>
+                    <option value="yok">Telefonu Olmayanlar</option>
+                </select>
+            </div>
+            <button class="btn" onclick="loadCompanies()">Listeyi Yenile</button>
+            <button class="btn btn-secondary" onclick="exportExcel()">Excel'e Aktar</button>
+        </div>
+        
+        <div class="companies-list">
+            <h2>Firmalar</h2>
+            <div id="companies-table-container">
+                <table id="companies-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('firma_adi')">Firma Adı ↕</th>
+                            <th onclick="sortTable('sehir')">Şehir ↕</th>
+                            <th onclick="sortTable('ilce')">İlçe ↕</th>
+                            <th onclick="sortTable('kategori')">Kategori ↕</th>
+                            <th onclick="sortTable('telefon')">Telefon ↕</th>
+                            <th onclick="sortTable('rating')">Rating ↕</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companies-tbody">
+                        <tr><td colspan="6" class="loading">Yükleniyor...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="detail-panel" id="detail-panel">
+            <h3>Firma Detayları</h3>
+            <p class="text-secondary">Listeden bir firma seçin</p>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/companies.js"></script>
+</body>
+</html>
+

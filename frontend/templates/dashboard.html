@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Google Maps CRM</title>
+    <link rel="stylesheet" href="/static/css/light.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body class="dashboard-page">
+    <nav class="navbar">
+        <div class="nav-brand">Google Maps CRM</div>
+        <div class="nav-menu">
+            <a href="/dashboard" class="nav-link active">Dashboard</a>
+            <a href="/search" class="nav-link">Arama</a>
+            <a href="/companies" class="nav-link">Firmalar</a>
+            <span id="admin-link" style="display: none;">
+                <a href="/admin" class="nav-link">Admin</a>
+            </span>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+            <span class="nav-user" id="nav-user"></span>
+            <button onclick="handleLogout()" class="btn-logout">Çıkış</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Dashboard</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Bakiye</div>
+                <div class="stat-value" id="balance">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Toplam Sorgu</div>
+                <div class="stat-value" id="total-queries">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Toplam Firma</div>
+                <div class="stat-value" id="total-companies">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Bugünkü Sorgu</div>
+                <div class="stat-value" id="queries-today">0</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-section">
+                <h2>Son İşlemler</h2>
+                <div id="recent-transactions" class="transaction-list"></div>
+            </div>
+            <div class="dashboard-section">
+                <h2>Son Sorgular</h2>
+                <div id="recent-queries" class="query-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
+

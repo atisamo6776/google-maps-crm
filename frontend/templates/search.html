@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arama - Google Maps CRM</title>
+    <link rel="stylesheet" href="/static/css/light.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <style>
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .search-form {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .search-results {
+            margin-top: 2rem;
+        }
+        .result-item {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        .loading-bar {
+            display: none;
+            width: 100%;
+            height: 4px;
+            background: var(--bg-hover);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .loading-bar.active {
+            display: block;
+        }
+        .loading-bar-fill {
+            height: 100%;
+            background: var(--primary-color);
+            animation: loading 1s infinite;
+        }
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body class="search-page">
+    <nav class="navbar">
+        <div class="nav-brand">Google Maps CRM</div>
+        <div class="nav-menu">
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/search" class="nav-link active">Arama</a>
+            <a href="/companies" class="nav-link">Firmalar</a>
+            <span id="admin-link" style="display: none;">
+                <a href="/admin" class="nav-link">Admin</a>
+            </span>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+            <span class="nav-user" id="nav-user"></span>
+            <button onclick="handleLogout()" class="btn-logout">Çıkış</button>
+        </div>
+    </nav>
+    
+    <div class="search-container">
+        <h1>İşletme Ara</h1>
+        
+        <div class="search-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Şehir</label>
+                    <select id="search-sehir">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ülke</label>
+                    <select id="search-ulke">
+                        <option value="Türkiye">Türkiye</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <input type="text" id="search-kategori" placeholder="örn: restoran, market">
+                </div>
+                <div class="form-group">
+                    <label>Limit</label>
+                    <input type="number" id="search-limit" value="20" min="1" max="100">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-checkbox">
+                    <input type="checkbox" id="search-tum-sehirler">
+                    <label for="search-tum-sehirler">Tüm Şehirler (Türkiye)</label>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="search-telefon-filtre">
+                    <label for="search-telefon-filtre">Sadece Telefonu Olanlar</label>
+                </div>
+            </div>
+            <button class="btn" onclick="handleSearch()">Ara / Çek</button>
+            <div id="search-error" class="error-message"></div>
+            <div class="loading-bar" id="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+        </div>
+        
+        <div class="search-results" id="search-results"></div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/search.js"></script>
+</body>
+</html>
+

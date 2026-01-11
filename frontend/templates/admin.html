@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Google Maps CRM</title>
+    <link rel="stylesheet" href="/static/css/light.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .admin-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .user-list {
+            display: grid;
+            gap: 1rem;
+        }
+        .user-card {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-info {
+            flex: 1;
+        }
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .credit-form {
+            display: flex;
+            gap: 0.5rem;
+            align-items: end;
+        }
+        .credit-form input {
+            width: 100px;
+        }
+    </style>
+</head>
+<body class="admin-page">
+    <nav class="navbar">
+        <div class="nav-brand">Google Maps CRM</div>
+        <div class="nav-menu">
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/search" class="nav-link">Arama</a>
+            <a href="/companies" class="nav-link">Firmalar</a>
+            <a href="/admin" class="nav-link active">Admin</a>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+            <span class="nav-user" id="nav-user"></span>
+            <button onclick="handleLogout()" class="btn-logout">Çıkış</button>
+        </div>
+    </nav>
+    
+    <div class="admin-container">
+        <h1>Admin Panel</h1>
+        
+        <div class="admin-section">
+            <h2>Kullanıcı Arama</h2>
+            <div class="form-group">
+                <input type="text" id="user-search" placeholder="Email veya kullanıcı adı ile ara...">
+            </div>
+            <button class="btn" onclick="searchUsers()">Ara</button>
+        </div>
+        
+        <div class="admin-section">
+            <h2>Kullanıcılar</h2>
+            <div id="users-list" class="user-list">
+                <div class="loading">Yükleniyor...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>
+
