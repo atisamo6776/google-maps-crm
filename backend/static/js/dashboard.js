@@ -62,11 +62,25 @@ async function loadDashboard() {
 
 // Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
-    // Kullanıcı kontrolü
+    // Kullanıcı ve token kontrolü
     const user = getUser();
-    if (!user) {
+    const token = getToken();
+    
+    console.log('Dashboard yüklendi - User:', user ? user.username : 'YOK');
+    console.log('Dashboard yüklendi - Token:', token ? 'Var (' + token.length + ' karakter)' : 'YOK');
+    
+    if (!user || !token) {
+        console.error('Kullanıcı veya token bulunamadı, ana sayfaya yönlendiriliyor');
+        console.log('User:', user);
+        console.log('Token:', token);
         window.location.href = '/';
         return;
+    }
+    
+    // Navbar'ı güncelle
+    const navUser = document.getElementById('nav-user');
+    if (navUser) {
+        navUser.textContent = `${user.username} (${user.balance} kredi)`;
     }
     
     loadDashboard();

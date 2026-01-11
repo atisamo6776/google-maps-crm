@@ -50,12 +50,34 @@ async function handleLogin() {
         
         // Token ve kullanıcı bilgisini kaydet
         console.log('Login - Token kaydediliyor:', data.access_token ? 'Token var (' + data.access_token.length + ' karakter)' : 'Token yok');
+        console.log('Login - User data:', data.user);
+        
+        if (!data.access_token) {
+            console.error('HATA: Token response\'da yok!');
+            errorDiv.textContent = 'Token alınamadı, lütfen tekrar deneyin';
+            return;
+        }
+        
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        console.log('Login - Token kaydedildi, localStorage kontrol:', localStorage.getItem('token') ? 'OK' : 'HATA');
         
-        // Dashboard'a yönlendir
-        window.location.href = '/dashboard';
+        // Kontrol et
+        const savedToken = localStorage.getItem('token');
+        const savedUser = localStorage.getItem('user');
+        console.log('Login - Token kaydedildi, localStorage kontrol:', savedToken ? 'OK (' + savedToken.length + ' karakter)' : 'HATA');
+        console.log('Login - User kaydedildi, localStorage kontrol:', savedUser ? 'OK' : 'HATA');
+        
+        if (!savedToken || !savedUser) {
+            console.error('HATA: Token veya user localStorage\'a kaydedilemedi!');
+            errorDiv.textContent = 'Veri kaydedilemedi, lütfen tekrar deneyin';
+            return;
+        }
+        
+        // Kısa bir bekleme sonra dashboard'a yönlendir (localStorage'ın yazılması için)
+        setTimeout(() => {
+            console.log('Dashboard\'a yönlendiriliyor...');
+            window.location.href = '/dashboard';
+        }, 100);
     } catch (error) {
         errorDiv.textContent = error.message;
     }
@@ -100,12 +122,34 @@ async function handleRegister() {
         
         // Token ve kullanıcı bilgisini kaydet
         console.log('Register - Token kaydediliyor:', data.access_token ? 'Token var (' + data.access_token.length + ' karakter)' : 'Token yok');
+        console.log('Register - User data:', data.user);
+        
+        if (!data.access_token) {
+            console.error('HATA: Token response\'da yok!');
+            errorDiv.textContent = 'Token alınamadı, lütfen tekrar deneyin';
+            return;
+        }
+        
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        console.log('Register - Token kaydedildi, localStorage kontrol:', localStorage.getItem('token') ? 'OK' : 'HATA');
         
-        // Dashboard'a yönlendir
-        window.location.href = '/dashboard';
+        // Kontrol et
+        const savedToken = localStorage.getItem('token');
+        const savedUser = localStorage.getItem('user');
+        console.log('Register - Token kaydedildi, localStorage kontrol:', savedToken ? 'OK (' + savedToken.length + ' karakter)' : 'HATA');
+        console.log('Register - User kaydedildi, localStorage kontrol:', savedUser ? 'OK' : 'HATA');
+        
+        if (!savedToken || !savedUser) {
+            console.error('HATA: Token veya user localStorage\'a kaydedilemedi!');
+            errorDiv.textContent = 'Veri kaydedilemedi, lütfen tekrar deneyin';
+            return;
+        }
+        
+        // Kısa bir bekleme sonra dashboard'a yönlendir (localStorage'ın yazılması için)
+        setTimeout(() => {
+            console.log('Dashboard\'a yönlendiriliyor...');
+            window.location.href = '/dashboard';
+        }, 100);
     } catch (error) {
         errorDiv.textContent = error.message;
     }
